@@ -30,11 +30,12 @@ const { resolve } = require('path');
 require('dotenv').config({ path: './.env' });
 
 // Ensure environment variables are set.
-checkEnv();
+//checkEnv();
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 app.use(express.static(process.env.STATIC_DIR));
+/*
 app.use(
   express.json({
     // We need the raw body to verify webhook signatures.
@@ -46,6 +47,7 @@ app.use(
     },
   })
 );
+/**/
 
 app.get('/', (req, res) => {
   const path = resolve(process.env.STATIC_DIR + '/index.html');
@@ -80,7 +82,7 @@ app.post('/create-checkout-session', async (req, res) => {
   // [customer_email] - lets you prefill the email input in the Checkout page
   // For full details see https://stripe.com/docs/api/checkout/sessions/create
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: process.env.PAYMENT_METHODS.split(', '),
+    payment_method_types: ["card"],
     mode: 'payment',
     locale: locale,
     line_items: [
@@ -100,6 +102,7 @@ app.post('/create-checkout-session', async (req, res) => {
 });
 
 // Webhook handler for asynchronous events.
+/*
 app.post('/webhook', async (req, res) => {
   let data;
   let eventType;
@@ -135,10 +138,11 @@ app.post('/webhook', async (req, res) => {
 
   res.sendStatus(200);
 });
+/**/
 
-app.listen(8080, () => console.log(`Node server listening on port ${4242}!`));
+app.listen(8080, () => console.log(`Node server listening on port ${8080}!`));
 
-
+/*
 function checkEnv() {
   const price = process.env.PRICE;
   if(price === "price_12345" || !price) {
@@ -146,5 +150,6 @@ function checkEnv() {
     process.exit(0);
   }
 }
+/**/
 
 

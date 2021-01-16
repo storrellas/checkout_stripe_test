@@ -98,6 +98,7 @@ var createCheckoutSession = function () {
       locale: i18next.language.toLowerCase().split('-')[0],
     }),
   }).then(function (result) {
+    console.log("MyTest --->")
     return result.json();
   });
 };
@@ -113,13 +114,15 @@ fetch('/config')
     updateQuantity();
     // Setup event handler to create a Checkout Session on submit
     document.querySelector('#submit').addEventListener('click', function (evt) {
-      createCheckoutSession().then(function (data) {
-        stripe
-          .redirectToCheckout({
-            sessionId: data.sessionId, 
-          })
-          .then(handleResult);
-      });
+      console.log("Submitting button")
+      createCheckoutSession()
+        .then(function (data) {
+          console.log("data ", data)
+          stripe.redirectToCheckout({sessionId: data.sessionId, })
+            .then(handleResult);
+        }).catch((error) => {
+          console.log("error", error)
+        });
     });
   });
 /**/
