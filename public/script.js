@@ -125,23 +125,3 @@ fetch('/config')
         });
     });
   });
-/**/
-/*
-window.config = { 
-  publicKey: 'pk_test_51I9UbODXRUMpwLuiiybHwzj6AAX7oSSpVF6kBPaj6nDkUcYpOMa7lZy2mPWx6Hnb4YcJEGYnsz2aQUXSY049coR300jK2rYDAL',
-  unitAmount: 1000,
-  currency: 'usd'
-};
-var stripe = Stripe(config.publicKey);
-updateQuantity();
-// Setup event handler to create a Checkout Session on submit
-document.querySelector('#submit').addEventListener('click', function (evt) {
-  createCheckoutSession().then(function (data) {
-    stripe
-      .redirectToCheckout({
-        sessionId: data.sessionId,
-      })
-      .then(handleResult);
-  });
-});
-/**/
